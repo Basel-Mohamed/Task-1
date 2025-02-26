@@ -373,8 +373,6 @@ export default function UpperNavbar({ setBackgroundImage }) {
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "start",
-                      justifyContent: "center",
-                      height: "100%",
                     }}
                   >
                     {/* Date */}
@@ -458,11 +456,10 @@ export default function UpperNavbar({ setBackgroundImage }) {
               height: 40,
               backgroundColor: "#FFFFFF26",
               borderRadius: "50%",
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
               "&:hover": { backgroundColor: "#FFFFFF40" },
-              display: { xs: "none", md: "block" },
+              display: { xs: "none", md: "flex" },
             }}
             onClick={toggleContainer}
           >
@@ -596,7 +593,6 @@ export default function UpperNavbar({ setBackgroundImage }) {
                   height: "48px",
                   borderRadius: "10px",
                   backgroundColor: "#2271EC",
-                  borderRadius: "10px",
                   marginTop: "42px",
                   marginLeft: "16px",
                   "&:hover": { backgroundColor: "#1A5FCC " },
@@ -739,7 +735,6 @@ export default function UpperNavbar({ setBackgroundImage }) {
             top: "53px",
             right: "10px",
             border: "1px solid #FAFAFA",
-            borderRadius: "0px",
             display: "flex",
             alignItems: "center",
             gap: "8px",

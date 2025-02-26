@@ -11,6 +11,8 @@ import tasksIcon from "/public/tasksIcon.svg";
 import peopleIcon from "/public/peopleIcon.svg";
 import bagIcon from "/public/bagIcon.svg";
 import graphIcon from "/public/graphIcon.svg";
+import toDoicon from "/src/assets/toDoIcon.svg";
+
 
 // MUI Components
 import Box from "@mui/material/Box";
@@ -23,7 +25,7 @@ export default function LowerNavbar() {
         {/* Left Nav */}
         <Box className={style.leftNav}>
           <Typography className={style.navText}>قائمة المهام</Typography>
-          <img src="/public/toDoIcon.svg" alt="to-do-icon" className={style.todoIcon} />
+          <img src={toDoicon} alt="to-do-icon" className={style.todoIcon} />
         </Box>
 
         {/* Mid Nav */}
