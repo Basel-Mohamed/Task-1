@@ -1,0 +1,67 @@
+$primaryFontFamily: "Inter";
+$textColor: white;
+$iconWidth: 24px;
+$iconheight: 24px;
+
+.text {
+  font-family: $primaryFontFamily;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  padding-left: 24px;
+}
+.upperNavbar {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 48px;
+  margin-right: 35px;
+  padding-top: 32px;
+  @media (max-width: 768px) {
+    flex-direction: column; // يجعل العناصر تتكدس عموديًا على الشاشات الصغيرة
+    align-items: center;
+    overflow: hidden;
+  }
+}
+.midUpperNav {
+  display: flex;
+  background-color: #ffffff26;
+  
+  color: $textColor;
+  width: 266px;
+  height: 84px;
+  position: relative;
+  border-radius: 6px;
+  margin-left: 20%;
+  @media (max-width: 992px) {
+    display: none;
+  }
+}
+
+.calenderIcon {
+  width: $iconWidth;
+  height: $iconheight;
+  position: absolute;
+  top: 16px;
+  left: 140px;
+}
+
+.calenderText {
+  position: absolute;
+  left: 207px;
+  top: 16px;
+}
+.sunIcon {
+  @extend .calenderIcon;
+  top: 16px;
+  left: 13px;
+}
+
+.rightUpperNav{
+  display: flex;
+  gap: 25px;
+}
+
+
+

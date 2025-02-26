@@ -1,0 +1,138 @@
+// Variables
+$primary-color: #19373F;
+$white: #FFFFFF;
+$gradient-1: linear-gradient(135deg, #1894A5, #A2FEE8);
+$gradient-2: linear-gradient(135deg, #FF8327, #FCC471);
+$gradient-3: linear-gradient(135deg, #FC77D7, #D92020);
+$gradient-4: linear-gradient(135deg, #9AEABA, #00C738);
+$gradient-5: linear-gradient(135deg, #2420D9, #00A1E2);
+
+// patterns
+.navContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+// Left Nav
+.leftNav {
+  gap: 8px;
+  position: absolute;
+  left: 47px;
+  bottom: 39px;
+  display: none;
+
+  @media (min-width: 900px) {
+    display: flex;
+  }
+
+  .navText {
+    font-size: 18px;
+    font-weight: 700;
+    color: $white;
+  }
+
+  .todoIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// Mid Nav
+.midNav {
+  width: 90%;
+  max-width: 414px;
+  background-color: rgba(235, 235, 235, 0.3);
+  backdrop-filter: blur(3px);
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 16px;
+
+  @media (min-width: 600px) {
+    bottom: 31px;
+  }
+
+  .iconsContainer {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+
+    @media (min-width: 600px) {
+      gap: 36px;
+      padding: 12px 0;
+    }
+
+    .iconBox {
+      border-radius: 11px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 36px;
+      height: 36px;
+
+      @media (min-width: 600px) {
+        width: 48px;
+        height: 48px;
+      }
+
+      .midNavIcons {
+        width: 18px;
+        height: 18px;
+
+        @media (min-width: 600px) {
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      // Gradient Backgrounds
+      &.gradient-1 {
+        background: $gradient-1;
+      }
+      &.gradient-2 {
+        background: $gradient-2;
+      }
+      &.gradient-3 {
+        background: $gradient-3;
+      }
+      &.gradient-4 {
+        background: $gradient-4;
+      }
+      &.gradient-5 {
+        background: $gradient-5;
+      }
+    }
+  }
+}
+
+// Right Nav
+.rightNav {
+  position: absolute;
+  right: 33px;
+  bottom: 39px;
+  display: none;
+  gap: 24px;
+
+  @media (min-width: 900px) {
+    display: flex;
+  }
+
+  .socialIconBox {
+    background-color: $primary-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 7px;
+    border-radius: 4px;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
