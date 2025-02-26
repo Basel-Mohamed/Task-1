@@ -373,7 +373,6 @@ export default function UpperNavbar({ setBackgroundImage }) {
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "start",
-                      height: "114px",
                       justifyContent: "center",
                       height: "100%",
                     }}
