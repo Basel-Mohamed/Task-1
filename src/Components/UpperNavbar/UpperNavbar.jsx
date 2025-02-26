@@ -1,7 +1,11 @@
 // react
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+// swiper
+import 'swiper/scss';
+import 'swiper/scss/pagination';
 // style
 import styles from "./UpperNavbar.module.scss";
 // images
@@ -19,7 +23,6 @@ import Avatar from "@mui/material/Avatar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import SwipeableViews from "react-swipeable-views";
 import { Paper, Typography } from "@mui/material";
 
 // icons
@@ -54,9 +57,20 @@ export default function UpperNavbar({ setBackgroundImage }) {
   // handel carsuol
   const [activeStep, setActiveStep] = useState(0);
   const [news, setNews] = useState([]);
-  const maxSteps = [3];
-
   const [selectedNews, setSelectedNews] = useState(null);
+
+
+  const paginationConfig = {
+    clickable: true,
+    renderBullet: (index, className) => {
+      if (index < 3) {
+        return `<span class="${className}"></span>`;
+      }
+      return '';
+    },
+  };
+
+
 
   // toggle News Des Container Visibility
   const toggleNewsDesContainer = () => {
@@ -116,6 +130,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
         });
         setNews(
           response.data.articles.map((article) => ({
+
             label: article.title,
             imgPath: article.urlToImage || firstWallpaperImg,
             title: article.title,
@@ -154,7 +169,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
         !(
           newsDesContainerRef.current &&
           newsDesContainerRef.current.contains(event.target)
-        ) // 🔥 تجنب الإغلاق عند النقر داخل newsDesContainer
+        ) 
       ) {
         setIsNewsContainerVisible(false);
       }
@@ -231,7 +246,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
     <nav>
       <Box className={styles.upperNavbar}>
         {/* left Upper Navbar */}
-        <Box className="leftUpperNav">
+        <Box className={styles.leftUpperNavbar}>
           <img src={logoPic} />
         </Box>
         {/* end of left Upper Navbar */}
@@ -244,175 +259,92 @@ export default function UpperNavbar({ setBackgroundImage }) {
               alt="calenderIcon"
             />
           </Box>
-          <span className={styles.calenderText}>التقويم</span>
+          <Typography className={styles.calenderText}>التقويم</Typography>
           <Box>
             <img className={styles.sunIcon} src={sunIcon} alt="weather-icon" />
           </Box>
-          <span className=" lg:absolute left-[59px] top-[16px] ">الطقس</span>
-          <span className="absolute left-[157px] top-[44px]">
-            {currentDate}
-          </span>
-          <span className="absolute left-[89px] top-[51px]">
+          <Typography className={styles.weatherText}>الطقس</Typography>
+          <span className={styles.customText}>{currentDate}</span>
+          <Typography component="span" className={styles.tempMin}>
             {weatherData.tempMin !== null
               ? new Intl.NumberFormat("ar-EG").format(
                   Math.round(weatherData.tempMin)
                 )
               : "--"}
-          </span>
-          <span className="absolute left-[66px] top-[51px]">/</span>
-          <span className="absolute left-[40px] top-[51px]">
+          </Typography>
+          <Typography component="span" className={styles.slash}>
+            /
+          </Typography>
+          <Typography component="span" className={styles.tempMax}>
             {weatherData.tempMax !== null
               ? new Intl.NumberFormat("ar-EG").format(
                   Math.round(weatherData.tempMax)
                 )
               : "--"}
-          </span>
-          <span className="absolute left-[79px] top-[40px]">o</span>
-          <span className="absolute left-[30px] top-[40px]">o</span>
+          </Typography>
+          <Typography component="span" className={styles.degree1}>
+            o
+          </Typography>
+          <Typography component="span" className={styles.degree2}>
+            o
+          </Typography>
         </Box>
         {/* end of Middle Navbar */}
         {/* Right Upper Navbar */}
         <Box className={styles.rightUpperNav}>
           <IconButton
-            sx={{
-              width: 40,
-              height: 40,
-              backgroundColor: "#FFFFFF26",
-              borderRadius: "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              "&:hover": { backgroundColor: "#FFFFFF40" },
-              display: { xs: "none", md: "block" }
-            }}
+            className={styles.newsButton}
             onClick={toggleNewsContainer}
           >
-            <img src={newsIcon} alt="news" width={25} />
+            <img src={newsIcon} alt="news" className={styles.newsIcon} />
           </IconButton>
           {/* News Container Element */}
           <Box
             ref={newsContainerRef}
-            sx={{
-              direction: "rtl",
-              position: "absolute",
-              top: "88px",
-              right: 410,
-              width: "44%",
-              height: "81%",
-              margin: "auto",
-              backgroundColor: "#FFFFFF2B",
-              backdropFilter: "blur(10px)",
-
-              borderRadius: "10px",
-              opacity: isNewsContainerVisible ? 1 : 0,
-              visibility: isNewsContainerVisible ? "visible" : "hidden",
-              transform: isNewsContainerVisible
-                ? "translateY(0)"
-                : "translateY(-10px)",
-              transition:
-                "opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease",
-              zIndex: 100,
-              // scroll style
-              overflowY: "auto",
-              "&::-webkit-scrollbar": {
-                width: "4px",
-              },
-              "&::-webkit-scrollbar-thumb": {
-                backgroundColor: "#888",
-                borderRadius: "10px",
-              },
-
-              "&::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: "#555",
-              },
-            }}
+            className={`${styles.newsContainer} ${
+              isNewsContainerVisible ? styles.visible : styles.hidden
+            }`}
           >
             {/* start cursol */}
-            <Box sx={{ width: "100%", position: "relative" }}>
-              <Paper
-                sx={{
-                  width: "85%",
-                  margin: "10% auto",
-                  borderRadius: "16px",
-                }}
-              >
-                <Box sx={{ position: "relative" }}>
-                  <SwipeableViews
-                    index={activeStep}
-                    onChangeIndex={setActiveStep}
-                  >
-                    {/* cursol Images */}
-                    {news.map((item, index) => (
-                      <div key={news.id}>
-                        <img
-                          src={item.imgPath}
-                          alt={item.label}
-                          onError={(e) => {
-                            e.target.src = firstWallpaperImg;
-                          }}
-                          style={{
-                            width: "100%",
-                            height: 204,
-                            borderRadius: "16px",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </SwipeableViews>
-                  {/* Indctor */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: "105%",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      borderRadius: "8px",
-                      display: "flex",
-                      gap: "8px",
+            <Box className={styles.container}>
+      <Paper className={styles.paper}>
+        <Box className={styles.relativeBox}>
+          <Swiper
+            modules={[Pagination]}
+            pagination={paginationConfig}
+            onSlideChange={(swiper) => setActiveStep(swiper.activeIndex)}
+            activeIndex={activeStep}
+          >
+            {news.map((item) => (
+              <SwiperSlide key={item.id}>
+                <Box className={styles.imageContainer}>
+                  <img
+                    src={item.imgPath}
+                    alt={item.label}
+                    onError={(e) => {
+                      e.target.src = firstWallpaperImg;
                     }}
-                  >
-                    {Array.from({ length: maxSteps }).map((_, index) => (
-                      <Box
-                        key={index}
-                        onClick={() => setActiveStep(index)}
-                        sx={{
-                          width: 6,
-                          height: 6,
-                          backgroundColor:
-                            activeStep === index ? "#FFFFFF" : "#C7C7C7",
-                          transform:
-                            activeStep === index ? "scale(2)" : "scale(1)",
-                          borderRadius: "50%",
-                          transition: "transform 0.3s ease-in-out",
-                          cursor: "pointer",
-                          alignContent: "center",
-                        }}
-                      />
-                    ))}
-                  </Box>
+                  />
                 </Box>
-              </Paper>
-            </Box>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Box>
+      </Paper>
+    </Box>
+
             {/* close button */}
             <IconButton
               onClick={() => setIsNewsContainerVisible(false)}
-              sx={{ position: "absolute", top: "18px", left: "16px" }}
+              className={styles.closeButton}
             >
-              <img src={closeIcon} />
+              <img src={closeIcon} alt="Close" />
             </IconButton>
             {/* second title */}
-            <Typography
-              sx={{
-                position: "absolute",
-                top: "300px",
-                left: "590px",
-                color: "white",
-              }}
-            >
-              اخر الاخبار
-            </Typography>
+            <Typography className={styles.newsTitle}>اخر الاخبار</Typography>
+
             {/* newes Images */}
-            {news.slice(0, 5).map((item, index) => (
+            {news.slice(0, 3).map((item, index) => (
               <Box
                 key={index}
                 sx={{
@@ -482,8 +414,8 @@ export default function UpperNavbar({ setBackgroundImage }) {
                           fontSize: "11px",
                         }}
                         onClick={() => {
-                          setSelectedNews(item); // تخزين بيانات الخبر المحدد
-                          setIsNewsDesContainerVisible(true); // عرض وصف الخبر
+                          setSelectedNews(item); 
+                          setIsNewsDesContainerVisible(true);
                         }}
                       >
                         شاهد المزيد
@@ -806,17 +738,17 @@ export default function UpperNavbar({ setBackgroundImage }) {
           sx={{
             position: "absolute",
             top: "53px",
-            left: "498px",
+            right: "10px",
             border: "1px solid #FAFAFA",
             borderRadius: "0px",
             display: "flex",
             alignItems: "center",
             gap: "8px",
-            width: "159px",
+            width: "130px",
             borderRadius: "8px",
           }}
         >
-          <span className="text-[16px] text-white"> الرجوع لكل الأخبار</span>
+          <span className="text-[12px] text-white"> الرجوع لكل الأخبار</span>
           <img src={leftArrow} alt="leftArrow" />
         </IconButton>
         {/* second title */}
@@ -824,8 +756,8 @@ export default function UpperNavbar({ setBackgroundImage }) {
           sx={{
             position: "absolute",
             top: "17px",
-            left: "593px",
-            color: "white",
+          right: "15px",
+            color: "white", 
           }}
         >
           اخر الاخبار
@@ -833,7 +765,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
         <Typography
           sx={{
             position: "absolute",
-            top: "330px",
+            top: {md:"50%" ,lg:"60%"},
             right: "15px",
             color: "white",
             width: "90px",
@@ -848,7 +780,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
           <Box
             sx={{
               padding: "0 16px",
-              color: "white", // scroll style
+              color: "white",
               overflowY: "auto",
               "&::-webkit-scrollbar": {
                 width: "4px",

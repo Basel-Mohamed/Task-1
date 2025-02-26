@@ -20,7 +20,7 @@ export default function Home() {
       let minutes = now.getMinutes();
       const amPm = hours >= 12 ? "م" : "ص";
       hours = hours % 12 || 12; // 12 hrs format
-      const formattedTime = `${toArabicNumbers(hours)} : ${toArabicNumbers(minutes)} ${amPm}`;
+      const formattedTime = ` ${toArabicNumbers(minutes)} :${toArabicNumbers(hours)} ${amPm}`;
       setTime(formattedTime);
 
       // format melady Date
@@ -46,7 +46,7 @@ export default function Home() {
           const hijriInfo = data.data[day].hijri;
           const formattedHijriDate = `${toArabicNumbers(
             hijriInfo.day
-          )} ${hijriInfo.month.ar} ${toArabicNumbers(hijriInfo.year)} هـ`;
+          )} ${hijriInfo.month.ar} ${toArabicNumbers(hijriInfo.year)}`;
           setHijriDate(formattedHijriDate);
         }
       } catch (error) {
