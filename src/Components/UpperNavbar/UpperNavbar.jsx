@@ -9,11 +9,11 @@ import 'swiper/scss/pagination';
 // style
 import styles from "./UpperNavbar.module.scss";
 // images
-import firstWallpaperImg from "/public/Main-Wallpaper.jpeg";
-import secondWallpaperImg from "/public/Wallpaper-2.png";
-import thirdWallpaperImg from "/public/Wallpaper-3.png";
-import fourthWallpaperImg from "/public/Wallpaper-4.png";
-import fifthWallpaperImg from "/public/Wallpaper-5.png";
+import firstWallpaperImg from "/Main-Wallpaper.jpeg";
+import secondWallpaperImg from "/Wallpaper-2.png";
+import thirdWallpaperImg from "/Wallpaper-3.png";
+import fourthWallpaperImg from "/Wallpaper-4.png";
+import fifthWallpaperImg from "/Wallpaper-5.png";
 
 // MUI components
 import Chip from "@mui/material/Chip";
@@ -26,15 +26,15 @@ import Badge from "@mui/material/Badge";
 import { Paper, Typography } from "@mui/material";
 
 // icons
-import avatarPic from "/public/profileIcon.svg";
-import logoPic from "/public/logo white.svg";
-import picIcon from "/public/picIcon.svg";
-import menuIcon from "/public/menuIcon.svg";
-import newsIcon from "/public/newsIcon.svg";
-import calenderIcon from "/public/calenderIcon.svg";
-import sunIcon from "/public/sunIcon.svg";
-import closeIcon from "/public/closeIcon.svg";
-import leftArrow from "/public/leftArrow.svg";
+import avatarPic from "/profileIcon.svg";
+import logoPic from "/logo white.svg";
+import picIcon from "/picIcon.svg";
+import menuIcon from "/menuIcon.svg";
+import newsIcon from "/newsIcon.svg";
+import calenderIcon from "/calenderIcon.svg";
+import sunIcon from "/sunIcon.svg";
+import closeIcon from "/closeIcon.svg";
+import leftArrow from "/leftArrow.svg";
 
 export default function UpperNavbar({ setBackgroundImage }) {
   const [isImgContainerVisible, setIsImgContainerVisible] = useState(false);
