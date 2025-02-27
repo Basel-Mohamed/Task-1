@@ -120,31 +120,27 @@ export default function UpperNavbar({ setBackgroundImage }) {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get("https://newsapi.org/v2/everything", {
-          params: {
-            q: "tesla",
-            from: "2025-01-25",
-            sortBy: "publishedAt",
-            apiKey: "29a432f85def439ea913c290a56a5c71",
-          },
-        });
-        setNews(
-          response.data.articles.map((article) => ({
-
-            label: article.title,
-            imgPath: article.urlToImage || firstWallpaperImg,
-            title: article.title,
-            description: article.description,
-            id: article.source.id,
-          }))
-        );
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+  
+        const fakeNews = data.slice(0, 10).map((product) => ({
+          label: product.title,
+          imgPath: product.image, // صورة بجودة أعلى
+          title: product.title,
+          description: product.description,
+          id: product.id,
+        }));
+  
+        setNews(fakeNews);
       } catch (error) {
-        console.error("Error fetching news:", error);
+        console.error("Error fetching fake news:", error);
       }
     };
-
+  
     fetchNews();
   }, []);
+  
+  
 
   // handel when img Container is open to close
   useEffect(() => {
