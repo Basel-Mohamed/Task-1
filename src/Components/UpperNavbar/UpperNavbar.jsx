@@ -324,7 +324,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
                 </Box>
               </SwiperSlide>
             ))}
-          </Swiper>
+          </Swiper> 
         </Box>
       </Paper>
     </Box>
@@ -728,7 +728,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
           }}
           sx={{
             position: "absolute",
-            top: "53px",
+            top: "9%",
             right: "10px",
             border: "1px solid #FAFAFA",
             display: "flex",
@@ -745,7 +745,7 @@ export default function UpperNavbar({ setBackgroundImage }) {
         <Typography
           sx={{
             position: "absolute",
-            top: "17px",
+            top: "3%",
           right: "15px",
             color: "white", 
           }}

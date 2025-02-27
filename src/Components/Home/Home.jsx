@@ -17,9 +17,9 @@ export default function Home() {
 
       // formating Time
       let hours = now.getHours();
-      let minutes = now.getMinutes();
+      let minutes = now.getMinutes().toString().padStart(2, "0");
       const amPm = hours >= 12 ? "م" : "ص";
-      hours = hours % 12 || 12; // 12 hrs format
+      hours = hours % 12 || 12; 
       const formattedTime = ` ${toArabicNumbers(minutes)} :${toArabicNumbers(hours)} ${amPm}`;
       setTime(formattedTime);
 
