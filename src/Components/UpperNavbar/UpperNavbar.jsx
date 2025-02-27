@@ -791,10 +791,9 @@ export default function UpperNavbar({ setBackgroundImage }) {
                 fontSize: "18px",
                 fontWeight: "bold",
                 color: "#FFFFFF",
-                margin: 0,
               }}
             >
-              {selectedNews.title.split(" ").slice(4).join(" ")}
+              {selectedNews.title}
             </Typography>
 
             {/* news description*/}
