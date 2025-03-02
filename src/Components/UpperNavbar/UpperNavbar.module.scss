@@ -1,60 +1,170 @@
+// ================ Variables & Configuration ================
+// Font settings
 $primaryFontFamily: "Inter";
-$textColor: white;
-$iconWidth: 24px;
-$iconheight: 24px;
 
-.text {
-  font-family: $primaryFontFamily;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  padding-left: 24px;
+// Basic colors
+$textColor: white;
+$backgroundColor: #ffffff26;
+$hoverBackgroundColor: #ffffff40;
+
+// Icon dimensions
+$iconDimensions: (
+  width: 24px,
+  height: 24px,
+);
+
+// Border radius settings
+$borderRadius: (
+  small: 6px,
+  medium: 10px,
+  large: 16px,
+  circle: 50%,
+);
+
+// Color palette for the entire component
+$colors: (
+  primary: #2271ec,
+  primary-hover: #1a5fcc,
+  white: #ffffff,
+  black-overlay: rgba(0, 0, 0, 0.7),
+  background: #ffffff26,
+  background-hover: #ffffff40,
+  text-gray: #a7a7a7,
+  accent: #ffca31,
+  success: #06be8e,
+  scrollbar: #888,
+  scrollbar-hover: #555
+);
+
+// Z-index management
+$z-layers: (
+  modal: 100,
+  overlay: 99,
+  default: 1
+);
+
+// Spacing system
+$spacing: (
+  xs: 4px,
+  sm: 8px,
+  md: 16px,
+  lg: 24px,
+  xl: 32px
+);
+
+// Responsive breakpoints
+$breakpoints: (
+  mobile: 480px,
+  tablet: 768px,
+  laptop: 992px,
+  desktop: 1024px,
+  wide: 1100px
+);
+
+// ================ Mixins ================
+// Base button styles
+@mixin button-base {
+  width: 190px !important;
+  height: 48px !important;
+  border-radius: map-get($borderRadius, medium) !important;
+  margin-top: map-get($spacing, xl) !important;
+  transition: all 0.3s ease !important;
 }
+
+// Center content using flex
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Position icons absolutely
+@mixin iconPosition($top, $left) {
+  position: absolute;
+  top: $top;
+  left: $left;
+}
+
+// Custom scrollbar styling
+@mixin scrollbarStyle {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: map-get($borderRadius, medium);
+
+    &:hover {
+      background-color: #555;
+    }
+  }
+}
+
+// Container transition effects
+@mixin containerTransition($duration: 0.3s) {
+  transition: all $duration ease;
+  
+  &.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+// Media query helper
+@mixin respond-to($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// ================ Layout Components ================
+// Main navigation bar
 .upperNavbar {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
-  margin-left: 48px;
-  margin-right: 35px;
-  padding-top: 32px;
+  margin: 32px 35px 0 48px;
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
     overflow: hidden;
   }
 }
+
+// ================ Weather & Calendar Widget ================
 .midUpperNav {
   display: flex;
-  background-color: #ffffff26;
-
+  background-color: $backgroundColor;
   color: $textColor;
   width: 266px;
   height: 84px;
   position: relative;
-  border-radius: 6px;
+  border-radius: map-get($borderRadius, small);
   margin-left: 20%;
+
   @media (max-width: 992px) {
     display: none;
   }
 }
 
 .calenderIcon {
-  width: $iconWidth;
-  height: $iconheight;
-  position: absolute;
-  top: 16px;
-  left: 140px;
+  width: map-get($iconDimensions, width);
+  height: map-get($iconDimensions, height);
+  @include iconPosition(16px, 140px);
 }
 
-.calenderText {
-  position: absolute;
-  left: 207px;
-  top: 16px;
-}
 .sunIcon {
   @extend .calenderIcon;
-  top: 16px;
   left: 13px;
 }
 
@@ -64,64 +174,54 @@ $iconheight: 24px;
 }
 
 .weatherText {
+  @include iconPosition(16px, 59px);
+
   @media (min-width: 1024px) {
     position: absolute;
   }
-  left: 59px;
-  top: 16px;
+}
+
+.calenderText {
+  @include iconPosition(16px, 207px);
 }
 
 .customText {
-  position: absolute;
-  left: 157px;
-  top: 44px;
+  @include iconPosition(44px, 157px);
 }
 
 .tempMin {
-  position: absolute;
-  left: 89px;
-  top: 51px;
+  @include iconPosition(51px, 89px);
 }
 
 .slash {
-  position: absolute;
-  left: 66px;
-  top: 51px;
+  @include iconPosition(51px, 66px);
 }
 
 .tempMax {
-  position: absolute;
-  left: 40px;
-  top: 51px;
+  @include iconPosition(51px, 40px);
 }
 
 .degree1 {
-  position: absolute;
-  left: 79px;
-  top: 40px;
+  @include iconPosition(40px, 79px);
 }
 
 .degree2 {
-  position: absolute;
-  left: 30px;
-  top: 40px;
+  @include iconPosition(40px, 30px);
 }
 
 .newsButton {
+  @include flexCenter;
   width: 40px;
   height: 40px;
-  background-color: #ffffff26 !important;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: $backgroundColor !important;
+  border-radius: map-get($borderRadius, circle);
 
   &:hover {
-    background-color: #ffffff40 !important;
+    background-color: $hoverBackgroundColor !important;
   }
 
   @media (max-width: 1100px) {
-    display: none !important ;
+    display: none !important;
   }
 }
 
@@ -137,37 +237,55 @@ $iconheight: 24px;
   width: 44%;
   height: 81%;
   margin: auto;
-  background-color: #ffffff2b;
+  background-color: map-get($colors, background);
   backdrop-filter: blur(10px);
-  border-radius: 10px;
-  z-index: 100;
+  border-radius: map-get($borderRadius, medium);
+  z-index: map-get($z-layers, modal);
   overflow-y: auto;
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-
-  &::-webkit-scrollbar {
-    width: 4px;
+  padding: map-get($spacing, md);
+  @include scrollbarStyle;
+  
+  &.hidden {
+    display: none;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px ;
+  &.visible {
+    display: block;
   }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+  // Large screens (maintain current layout)
+  @media (min-width: map-get($breakpoints, desktop)) {
+    right: 410px;
+    width: 44%;
   }
-}
 
-.hidden {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-}
+  // Medium screens
+  @media (max-width: map-get($breakpoints, desktop)) {
+    right: 300px;
+    width: 50%;
+  }
 
-.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+  // Tablet screens
+  @media (max-width: map-get($breakpoints, laptop)) {
+    right: 150px;
+    width: 60%;
+  }
+
+  // Mobile screens
+  @media (max-width: map-get($breakpoints, tablet)) {
+    right: 50%;
+    transform: translateX(50%);
+    width: 90%;
+    height: 70%;
+    top: 120px;
+  }
+
+  // Small mobile screens
+  @media (max-width: map-get($breakpoints, mobile)) {
+    width: 95%;
+    height: 65%;
+    top: 100px;
+  }
 }
 
 .container {
@@ -178,25 +296,21 @@ $iconheight: 24px;
 .paper {
   width: 85%;
   margin: 10% auto;
-  border-radius: 16px !important;
-  }
-
-.relativeBox {
-  position: relative;
+  border-radius: map-get($borderRadius, large) !important;
 }
 
 .imageContainer {
   width: 100%;
   height: 204px;
-  border-radius: 16px;
+  border-radius: map-get($borderRadius, large);
   overflow: hidden;
-}
 
-.imageContainer img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 16px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: map-get($borderRadius, large);
+  }
 }
 
 .closeButton {
@@ -209,7 +323,7 @@ $iconheight: 24px;
   position: absolute;
   top: 50%;
   right: 3%;
-  color: white;
+  color: $textColor;
   font-size: 1.5rem;
 
   @media (max-width: 1024px) {
@@ -217,7 +331,7 @@ $iconheight: 24px;
     font-size: 1.3rem;
   }
 
-  @media (max-width: 768px) { 
+  @media (max-width: 768px) {
     right: 8px;
     font-size: 1.1rem;
   }
@@ -228,14 +342,14 @@ $iconheight: 24px;
   }
 }
 
-
-.swiper-pagination {
-  position: static !important;
-  margin-top: 3px;
-  background-color: white !important;
-  padding: 5px 0;
-  display: flex;
-  justify-content: center;
+:global {
+  .swiper-pagination {
+    position: absolute !important;
+    bottom: 1% !important;
+    margin-top: 3px;
+    padding: 5px 0;
+    @include flexCenter;
+  }
 
   .swiper-pagination-bullet {
     width: 6px;
@@ -243,13 +357,441 @@ $iconheight: 24px;
     background-color: #ccc !important;
     opacity: 1;
     margin: 0 3px;
-    border-radius: 50%;
+    border-radius: map-get($borderRadius, circle);
+
+    &-active {
+      transform: scale(2);
+      background-color: $textColor !important;
+      border-radius: map-get($borderRadius, small);
+    }
+  }
+}
+
+.newsDescription {
+  font-size: 14px !important;
+  color: #a7a7a7;
+  margin-top: 8px !important;
+}
+
+.newsSecTitle {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  color: #ffffff;
+  position: static !important;
+}
+
+.newsWrapper {
+  padding: 0 16px;
+  color: white;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px !important;
   }
 
-  .swiper-pagination-bullet-active {
-    width: 12px;
-    height: 6px;
-    background-color: #007aff;
-    border-radius: 6px;
+  &::-webkit-scrollbar-thumb {
+    background-color: #888 !important;
+    border-radius: 10px;
   }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555 !important;
+  }
+}
+
+.dateText {
+  position: absolute !important;
+  right: 15px !important;
+  color: white;
+  width: 90px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+
+  @media (min-width: 768px) {
+    top: 50% !important;
+  }
+
+  @media (min-width: 1024px) {
+    top: 60% !important;
+  }
+}
+
+.secondTitle {
+  position: absolute;
+  top: 3%;
+  right: 15px;
+  color: white;
+}
+
+.noNewsSelected {
+  font-size: 16px;
+  color: white;
+}
+
+.backToNewsButton {
+  position: absolute !important;
+  top: 9%;
+  right: 10px;
+  border: 1px solid #fafafa !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 130px;
+  border-radius: 8px !important;
+}
+
+.backToNewsText {
+  font-size: 12px !important;
+  color: white;
+}
+
+.cursolImage {
+  width: 100%;
+  height: 204px;
+  border-radius: 16px !important;
+  object-fit: cover;
+}
+
+.cursolContainer {
+  width: 100%;
+  position: relative !important;
+}
+
+.cursolPaper {
+  width: 85%;
+  margin: 15% auto;
+  border-radius: 16px !important;
+}
+
+.relativeBox {
+  position: relative !important;
+}
+
+.expandIcon {
+  color: white !important;
+  width: 16px;
+  height: 16px;
+}
+
+.labelContainer {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.avatar {
+  width: 32px !important;
+  height: 32px !important;
+}
+.chip {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  flex-direction: row-reverse;
+  height: 40px !important;
+}
+
+.stackContainer {
+  width: 166px !important;
+}
+
+.iconButton {
+  @include button-base;
+  background-color: map-get($colors, white);
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+}
+
+.typographyCancel {
+  color: #3a3619 !important;
+}
+
+.typographyWhite {
+  color: white;
+}
+
+.iconButtonPrimary {
+  @include button-base;
+  background-color: map-get($colors, primary) !important;
+  margin-left: map-get($spacing, md) !important;
+
+  &:hover {
+    background-color: map-get($colors, primary-hover) !important;
+  }
+}
+
+.wallpaperImage {
+  width: 100% !important;
+  border-radius: 4px !important;
+  transition: transform 0.3s ease !important;
+
+  @media (max-width: map-get($breakpoints, tablet)) {
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+
+  &:hover {
+    transform: scale(1.2) !important;
+    @media (max-width: map-get($breakpoints, mobile)) {
+      transform: scale(1.1) !important; // Smaller scale on mobile for better UX
+    }
+  }
+}
+
+.selectedWallpaper {
+  border: 2px solid #06be8e !important;
+}
+
+.iconButtonImage {
+  width: 30% !important;
+}
+
+.imageScrollContainer {
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  white-space: nowrap !important;
+  direction: rtl !important;
+  cursor: grab !important;
+
+  &.dragging {
+    cursor: grabbing !important;
+  }
+
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+}
+
+.backgroundText {
+  font-family: "Inter" !important;
+  z-index: map-get($z-layers, overlay) !important;
+  padding-right: 16px !important;
+  padding-top: 12px !important;
+  font-size: 22px !important;
+  font-weight: 400 !important;
+  line-height: 28px !important;
+
+  @media (max-width: map-get($breakpoints, tablet)) {
+    font-size: 18px !important;
+    padding-right: 12px !important;
+  }
+
+  @media (max-width: map-get($breakpoints, mobile)) {
+    font-size: 16px !important;
+    padding-right: 8px !important;
+  }
+}
+
+.imgContainer {
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  white-space: nowrap !important;
+  direction: rtl !important;
+  position: absolute !important;
+  top: 89px !important;
+  right: 224px !important;
+  width: 428px !important;
+  height: 250px !important;
+  background-color: #f1f5f9 !important;
+  padding: 12px !important;
+  border: 0.5px solid #ffffff80 !important;
+  border-radius: 20px !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease !important;
+  z-index: map-get($z-layers, modal) !important;
+  cursor: grab !important;
+
+  // Large screens (maintain current layout)
+  @media (min-width: map-get($breakpoints, desktop)) {
+    right: 224px !important;
+    width: 428px !important;
+  }
+
+  // Medium screens
+  @media (max-width: map-get($breakpoints, desktop)) {
+    right: 180px !important;
+    width: 380px !important;
+  }
+
+  // Tablet screens
+  @media (max-width: map-get($breakpoints, laptop)) {
+    right: 120px !important;
+    width: 350px !important;
+  }
+
+  // Mobile screens
+  @media (max-width: map-get($breakpoints, tablet)) {
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    width: 90% !important;
+    max-width: 428px !important;
+    height: 280px !important;
+    top: 120px !important;
+  }
+
+  // Small mobile screens
+  @media (max-width: map-get($breakpoints, mobile)) {
+    width: 95% !important;
+    height: 250px !important;
+    padding: 8px !important;
+  }
+
+  &.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    @media (max-width: map-get($breakpoints, tablet)) {
+      transform: translateX(50%) !important;
+    }
+  }
+
+  &.hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) !important;
+  }
+
+  &.dragging {
+    cursor: grabbing !important;
+  }
+
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+}
+
+.blackLayer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  z-index: 99 !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+
+  &.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  &.hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+.imgIconButton {
+  width: 40px !important;
+  height: 40px !important;
+  background-color: #ffffff26 !important;
+  border-radius: 50% !important;
+  justify-content: center !important;
+  align-items: center !important;
+  display: flex !important;
+
+  &:hover {
+    background-color: #ffffff40 !important;
+  }
+
+  @media (max-width: 899px) {
+    display: none !important;
+  }
+}
+
+.avatarIcon {
+  width: 25px !important;
+  height: 25px !important;
+  background-color: transparent !important;
+}
+
+.menuIcon{
+  @extend .imgIconButton ;
+  
+  @media (max-width: 899px) {
+    display: flex !important;
+  }
+}
+
+.newsDesButton {
+  color: #ffca31 !important;
+  font-size: 11px !important;
+}
+
+.newsFirstTitle {
+  font-size: 16px !important;
+  color: #ffffff !important;
+}
+
+.newsBox {
+  display: flex !important;
+  align-items: flex-end !important;
+}
+
+.newsData {
+  color: #a7a7a7 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.newsText {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.newsDate {
+  color: #a7a7a7 !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+}
+
+.newsItem {
+  margin: 12px 17px 15px 152px !important;
+
+  @media (max-width: map-get($breakpoints, tablet)) {
+    margin: 12px 17px 15px 100px !important;
+  }
+
+  @media (max-width: map-get($breakpoints, mobile)) {
+    margin: 12px 17px 15px 80px !important;
+  }
+}
+
+.newsTextContent {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.newsImageBox {
+  flex-shrink: 0 !important;
+}
+
+.newsThumbnail {
+  width: 188px !important;
+  height: 114px !important;
+  object-fit: cover !important;
+  border-radius: 6px !important;
+
+  @media (max-width: map-get($breakpoints, tablet)) {
+    width: 140px !important;
+    height: 85px !important;
+  }
+
+  @media (max-width: map-get($breakpoints, mobile)) {
+    width: 120px !important;
+    height: 72px !important;
+  }
+}
+
+.loadingContainer {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
+.loadingSpinner {
+  color: white !important;
+  width: 40px !important;
+  height: 40px !important;
 }
